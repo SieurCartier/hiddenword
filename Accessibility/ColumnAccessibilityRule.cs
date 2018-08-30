@@ -5,8 +5,8 @@ namespace ConsoleApplication.Accessibility
     public class ColumnAccessibilityRule : AbstractAccessibilityRule
     {
         public ColumnAccessibilityRule() : base(
-            ((uint X, uint Y) coordinates) =>
-                new HashSet<(uint X, uint Y)>() {
+            (Coordinates coordinates) =>
+                new HashSet<Coordinates>() {
                     (coordinates.X + 1, coordinates.Y)
                 }
         )

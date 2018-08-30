@@ -5,7 +5,7 @@ namespace ConsoleApplication
     public class EdgePointStartingPointRule : AbstractStartingPointRule
     {
         public EdgePointStartingPointRule() : base(
-            ((uint X, uint Y) coo, Graph graph) => 
+            (Coordinates coo, Graph graph) => 
                 coo.X == 0
                 || coo.Y == 0
                 || coo.X + 1 >= graph.Width

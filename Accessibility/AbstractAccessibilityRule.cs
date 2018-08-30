@@ -5,9 +5,9 @@ namespace ConsoleApplication.Accessibility
 {
     public abstract class AbstractAccessibilityRule
     {
-        public Func<(uint X, uint Y), ISet<(uint X, uint Y)>> GenerateAdjacentCoordinates { get; private set; }
+        public Func<Coordinates, ISet<Coordinates>> GenerateAdjacentCoordinates { get; private set; }
 
-        protected AbstractAccessibilityRule(Func<(uint X, uint Y), ISet<(uint X, uint Y)>> lambda)
+        protected AbstractAccessibilityRule(Func<Coordinates, ISet<Coordinates>> lambda)
         {
             GenerateAdjacentCoordinates = lambda;
         }

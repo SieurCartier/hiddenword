@@ -9,8 +9,8 @@ namespace ConsoleApplication
         private IEnumerable<string> wordsToFind;
         private char[][] array;
 
-        private IDictionary<(uint X, uint Y), Node> nodes = new Dictionary<(uint X, uint Y), Node>() ;
-        private ISet<Node> startingNodes = new HashSet<Node>() ;
+        private IDictionary<Coordinates, Node> nodes = new Dictionary<Coordinates, Node>();
+        private ISet<Node> startingNodes = new HashSet<Node>();
 
         public uint Width { get; internal set; }
         public uint Height { get; internal set; }
@@ -30,20 +30,20 @@ namespace ConsoleApplication
             if (array.Length != Height)
                 throw new ArgumentException($"Given Height ({Height}) doesn't correspond to grid's height ({array.Length}).");
 
-            foreach ((uint X, uint Y) coordinates in CoordinatesIterator())
+            foreach (Coordinates coordinates in CoordinatesIterator())
             {
                 if (coordinates.Y >= array[coordinates.X].Length)
                     throw new ArgumentException($"Given Width ({Width}) doesn't correspond to grid's width ({array[coordinates.X].Length}).");
 
                 var currentNode = NodeFromCoordinates(coordinates);
 
-                var neighbors = FindNeighbors(currentNode);
+                var neighboors = FindNeighboors(currentNode);
 
-                currentNode.Add(neighbors);
+                currentNode.Add(neighboors);
             }
         }
 
-        private IEnumerable<Node> FindNeighbors(Node currentNode)
+        private IEnumerable<Node> FindNeighboors(Node currentNode)
         {
             return Game.Rules.AccessibilityRules
                 .Select(rule => rule.GenerateAdjacentCoordinates(currentNode.Coordinates))
@@ -52,7 +52,7 @@ namespace ConsoleApplication
                 .Select(NodeFromCoordinates);
         }
 
-        private Node NodeFromCoordinates((uint X, uint Y) coordinates)
+        private Node NodeFromCoordinates(Coordinates coordinates)
         {
             if (!nodes.ContainsKey(coordinates))
                 Add(new Node(coordinates, array[coordinates.X][coordinates.Y]));
@@ -60,7 +60,7 @@ namespace ConsoleApplication
             return nodes[coordinates];
         }
 
-        private bool CoordinatesAreInGrid((uint X, uint Y) coordinates)
+        private bool CoordinatesAreInGrid(Coordinates coordinates)
         {
             return coordinates.X < Width
                 && coordinates.Y < Height;
@@ -87,7 +87,7 @@ namespace ConsoleApplication
             return Game.Rules.StartingPointRules.All(rule => rule.Match(toAdd.Coordinates, this));
         }
 
-        private IEnumerable<(uint X, uint Y)> CoordinatesIterator()
+        private IEnumerable<Coordinates> CoordinatesIterator()
         {
             for (uint i = 0; i < Width; i++)
             {

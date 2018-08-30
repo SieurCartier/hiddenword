@@ -5,13 +5,13 @@ namespace ConsoleApplication
 {
     public class Node
     {
-        public (uint X, uint Y) Coordinates { get; internal set; }
+        public Coordinates Coordinates { get; internal set; }
 
         public char Letter { get; internal set; }
 
         public List<Node> Neighbors { get; set; } = new List<Node>();
 
-        public Node((uint X, uint Y) coordinates, char letter)
+        public Node(Coordinates coordinates, char letter)
         {
             Coordinates = coordinates;
             Letter = letter;
