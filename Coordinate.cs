@@ -13,7 +13,7 @@ public class Coordinates
         return (coo.X, coo.Y);
     }
 
-        public static implicit operator Coordinates((uint X, uint Y) coo)
+    public static implicit operator Coordinates((uint X, uint Y) coo)
     {
         return new Coordinates(coo.X, coo.Y);
     }

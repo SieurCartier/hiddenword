@@ -45,10 +45,13 @@ namespace ConsoleApplication
                     new ReverseLeftDiagonalAccessibilityRule(),
                     new RightDiagonalAccessibilityRule(),
                     new ReverseRightDiagonalAccessibilityRule(),
-                }
+                },
+                EndResultSortingRule = new EndResultSortingRule()
             };
 
             var graph = new Graph(wordsToFind, height, width, array);
+
+            Console.WriteLine(graph.Evaluate());
 
             PrintArray(array);
 

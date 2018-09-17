@@ -7,12 +7,17 @@ namespace ConsoleApplication
     public class Graph
     {
         private IEnumerable<string> wordsToFind;
+
         private char[][] array;
 
         private IDictionary<Coordinates, Node> nodes = new Dictionary<Coordinates, Node>();
+
         private ISet<Node> startingNodes = new HashSet<Node>();
 
+        private IList<Node> usedNodes = new List<Node>();
+
         public uint Width { get; internal set; }
+
         public uint Height { get; internal set; }
 
         public Graph(IEnumerable<string> wordsToFind, uint height, uint width, char[][] array)
@@ -96,6 +101,27 @@ namespace ConsoleApplication
                     yield return (i, j);
                 }
             }
+        }
+
+        public string Evaluate()
+        {
+            var ret = string.Empty;
+
+            foreach(var word in wordsToFind){
+                Find(word);
+            }
+
+            return nodes
+                   .Values
+                   .Except(usedNodes)
+                   .OrderBy(node => node.Coordinates, Game.Rules.EndResultSortingRule)
+                   .Select(n => n.Letter)
+                   .ToString();
+        }
+
+        private void Find(string word)
+        {
+            // usedNodes.Add
         }
     }
 }
